@@ -28,32 +28,20 @@
 
 int sc_memoryInit (); // инициализация массива из 100 элементов
 
-int sc_memorySet (int address,
-                  int value); // устанавливает значение блока памяти
+int sc_memorySet (int address,int value); // устанавливает значение блока памяти
 
-int sc_memoryGet (int address, // получает значение блока памяти и
-                  int *value); // возвращает его в значение var
+int sc_memoryGet (int address, int *value); // получает значение блока памяти и  возвращает его в значение var
 
-int sc_memorySave (
-    char *filename); // сохраняет память в бинарный файл 
+int sc_memorySave (char *filename); // сохраняет память в бинарный файл 
 
 int sc_memoryLoad (char *filename); // загружает оперативную память из файла
 
 int sc_regInit (void); // инициализирует регистр флагов с нуля
 
-int sc_regSet (
-    int register, //устанаввливает флаг значение регистра #define-s используется
-    int value);   // для номеров регистров если неверный номер - то ошибка.
+int sc_regSet (int register,int value);  //устанаввливает флаг значение регистра #define-s используется для номеров регистров если неверный номер - то ошибка.
 
-int sc_regGet (int register,
-               int *value); //получает значение флага, если неправильный регистр то ошибка
+int sc_regGet (int register,int *value); //получает значение флага, если неправильный регистр то ошибка
 
-int
-sc_commandEncode (int command, // кодирует команду с определенным номером и
-                  int operand, // операндом помещает результат в значение если он неправильная
-                  int *value); // команда или операнд - ошибка, значение не меняется
+int sc_commandEncode (int command, int operand,int *value);// кодирует команду с определенным номером и  операндом помещает результат в значение если он неправильная  команда или операнд - ошибка, значение не меняется
 
-int sc_commandDecode (
-    int value,    // декодирует значение как команду sc если декодировние невозможно
-    int *command, // устанавливает команду ошибки и возвращает ошибку.
-    int *operand);
+int sc_commandDecode (int value,int *command,int *operand);// декодирует значение как команду sc если декодировние невозможно  устанавливает команду ошибки и возвращает ошибку.
