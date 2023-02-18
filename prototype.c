@@ -3,13 +3,15 @@
 int sc_memory[MEMSIZE];
 int sc_register;
 
-int sc_memoryInit () //инициализирует массив из 100 элементов
+int
+sc_memoryInit () //инициализирует массив из 100 элементов
 {
-    memset (sc_memory, 0, MEMSIZE * sizeof (sc_memory[0]));
-    return 0;
+  memset (sc_memory, 0, MEMSIZE * sizeof (sc_memory[0]));
+  return 0;
 }
 
-int sc_memorySet(int address,
+int
+sc_memorySet(int address,
                  int value)// устанавливает значение блока памяти
 {
     if (address < 0 || address >= MEMSIZE)
