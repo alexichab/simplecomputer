@@ -1,10 +1,11 @@
 #include "prototype.h"
 #include <stdio.h>
 
-int main ()
+int
+main ()
 {
   printf ("___________________________________________________________________"
-         "____\n");
+          "____\n");
   sc_memoryInit ();
   printf ("Инициализация памяти\n");
   for (int i = 1; i < 4; i++)
@@ -20,7 +21,7 @@ int main ()
       printf ("получение из массива sc_memory[%d] = %d\n", i, val);
     }
   printf ("___________________________________________________________________"
-         "____\n");
+          "____\n");
   char *memfile = "memory.mem";
   sc_memorySave (memfile);
   printf ("запись в файл memory -> %s\n", memfile);
@@ -31,7 +32,7 @@ int main ()
       printf ("Запись sc_memory[%d] to %d\n", i, val);
     } 
   printf ("___________________________________________________________________"
-         "____\n");
+          "____\n");
   sc_memoryLoad (memfile);
   printf ("Загружаем файл memory <- %s\n", memfile);
   for (int i = 1; i < 4; i++)
@@ -41,7 +42,7 @@ int main ()
       printf ("Получаем sc_memory[%d] = %d\n", i, val);
     }
   printf ("___________________________________________________________________"
-         "____\n");
+          "____\n");
   sc_regInit ();
   printf ("инициализация register = 0\n");
   sc_regSet (FLAG_DIV_BY_ZERO, 1);
@@ -56,7 +57,7 @@ int main ()
   int command = 0x21; //команда
   int operand = 11;   //что записываешь в команду
   sc_commandEncode (command, operand, &val);
-  printf ("Кодирование команды '%d' операнда '%d' = '%d' \n",command, operand,
+  printf ("Кодирование команды '%d' операнда '%d' = '%d' \n", command, operand,
           val);   
   sc_commandDecode (val, &command, &operand);
   printf ("Декодирование '%d' = команды '%d' операнда'%d'\n", val, command,
@@ -66,6 +67,6 @@ int main ()
   sc_regGet (FLAG_WRONG_COMMAND, &val);
   printf ("FLAG_WRONG_COMMAND = %d\n", val);
   printf ("___________________________________________________________________"
-         "____\n");
+          "____\n");
   return 0;
 }
