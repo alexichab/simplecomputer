@@ -55,10 +55,10 @@ main ()
   sc_regGet (FLAG_OVERFLOW, &val);
   printf ("Получение FLAG_OVERFLOW = %d\n", val);
   int command = 0x21; //команда
-  int operand = 11;   //что записываешь в команду
+  int operand = 11; //что записываешь в команду
   sc_commandEncode (command, operand, &val);
   printf ("Кодирование команды '%d' операнда '%d' = '%d' \n", command, operand,
-           val);   
+          val);   
   sc_commandDecode (val, &command, &operand);
   printf ("Декодирование '%d' = команды '%d' операнда'%d'\n", val, command,
           operand);

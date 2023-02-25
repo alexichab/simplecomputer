@@ -14,6 +14,7 @@
 #define FLAG_DIV_BY_ZERO 2
 #define FLAG_OVERFLOW 1
 
+
 // ошибки 
 #define ERR_WRONG_ADDRESS -1
 #define ERR_WRONG_FLAG -2

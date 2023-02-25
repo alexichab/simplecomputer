@@ -12,9 +12,9 @@ sc_memoryInit () //инициализирует массив из 100 элеме
 
 int
 sc_memorySet (int address,
-                 int value) // устанавливает значение блока памяти
+              int value) // устанавливает значение блока памяти
 {
-    if (address < 0 || address >= MEMSIZE)
+  if (address < 0 || address >= MEMSIZE)
     {
       BIT_SET (sc_register, FLAG_WRONG_ADDRESS);
       return ERR_WRONG_ADDRESS;
@@ -23,10 +23,11 @@ sc_memorySet (int address,
   return 0;
 }
 
-int sc_memoryGet (int address, // gets the value of [address] memory unit and
-                  int *value)//получает значение блока памяти и возвращет его в переменную
+int
+sc_memoryGet (int address, // gets the value of [address] memory unit and
+              int *value) //получает значение блока памяти и возвращет его в переменную
 {
-    if (address < 0 || address >= MEMSIZE)
+  if (address < 0 || address >= MEMSIZE)
     {
       BIT_SET (sc_register, FLAG_WRONG_ADDRESS);
       return ERR_WRONG_ADDRESS;
@@ -35,9 +36,10 @@ int sc_memoryGet (int address, // gets the value of [address] memory unit and
   return 0;
 }
 
-int sc_memorySave (char *filename) //сохраняет память в бинарный файл
+int
+sc_memorySave (char *filename) //сохраняет память в бинарный файл
 {
-    FILE *f = fopen (filename, "wb");
+  FILE *f = fopen (filename, "wb");
   if (!f)
     {
       return 1;
@@ -47,10 +49,11 @@ int sc_memorySave (char *filename) //сохраняет память в бина
   return 0;
 }
 
-int sc_memoryLoad (char *filename) //загружает оперативную память из файла
+int
+sc_memoryLoad (char *filename) //загружает оперативную память из файла
 {
   FILE *f = fopen (filename, "rb");
-    if (!f)
+  if (!f)
     {
       return 1;
     }
@@ -59,7 +62,8 @@ int sc_memoryLoad (char *filename) //загружает оперативную �
   return 0;
 }
 
-int sc_regInit (void) //инициализирует регистр флагов с 0
+int
+sc_regInit (void) //инициализирует регистр флагов с 0
 {
   sc_register = 0;
   return 0; 
@@ -135,10 +139,10 @@ sc_commandEncode (
 }
 
 int
-sc_commandDecode (
-    int value, int *command,
-    int *operand) // декодирует значение как комнаду sc, если декодировавние 
-                  // невозможно устанавливает команду error и возвразает ошибку.  
+sc_commandDecode (int value, int *command,
+                  int *operand) // декодирует значение как комнаду sc, если
+                                // декодировавние невозможно устанавливает
+                                // команду error и возвразает ошибку.  
 {
   if ((value & (1 << 14)) != 0)
     {
