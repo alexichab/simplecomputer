@@ -88,10 +88,12 @@ int sc_regSet (
   return 0;
 }
 
-int sc_regGet (int reg,
-              int *value) //получает значение флага, если неверный регистр, то ошибка
+int
+sc_regGet (
+    int reg,
+    int *value) //получает значение флага, если неверный регистр то ошибка
 {
-    if (reg < 0 || reg > 5)
+  if (reg < 0 || reg > 5)
     {
       return ERR_WRONG_FLAG;
     }
@@ -99,16 +101,21 @@ int sc_regGet (int reg,
   return 0;
 }
 
-int sc_commandEncode (int command,
-                      int operand,
-                      int *value) //кодирует команду с определенным номером и операндом, помещает результат в значение, если он неправильный то команда или операнд выдают ошибку,значение не меняется.
+int
+sc_commandEncode (
+    int command, int operand,
+    int *value) //кодирует команду с определенным номером и операндом
+                 // помещает результат в значение, если он неправильный
+                 // или операнд - ошибкa, значение не меняется.
 {
   // commands list: 0x10, 0x11, 0x20, 0x21, 0x30, 0x31, 0x32, 0x33, 0x40, 0x41,
   // 0x42, 0x43, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x60,
   // 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x70, 0x71, 0x72,
   // 0x73, 0x74, 0x75, 0x76
-  if (((command > 0x76) || (command < 0x10)) || ((command > 0x11) & (command < 0x20))
-      || ((command > 0x21) & (command > 0x30)) || ((command > 0x33) & (command < 0x40))
+  if (((command > 0x76) || (command < 0x10))
+      || ((command > 0x11) & (command < 0x20))
+      || ((command > 0x21) & (command > 0x30))
+      || ((command > 0x33) & (command < 0x40))
       || ((command > 0x43) & (command < 0x51)))
     {
       sc_regSet (FLAG_WRONG_COMMAND, 1);
@@ -126,9 +133,11 @@ int sc_commandEncode (int command,
   return 0;
 }
 
-int sc_commandDecode (int value,
-                      int *command,
-                      int *operand) //декодирует значение как комнаду sc,если декодировавние невозможно устанавливает команду error и возвразает ошибку.  
+int
+sc_commandDecode (
+    int value, int *command,
+    int *operand) // декодирует значение как комнаду sc, если декодировавние 
+                  //невозможно устанавливает команду error и возвразает ошибку.  
 {
   if ((value & (1 << 14)) != 0)
     {
