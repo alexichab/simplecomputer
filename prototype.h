@@ -55,7 +55,7 @@ int sc_commandEncode (
                  // помещает результат в значение если он неправильная  команда
                  // или операнд - ошибка, значение не меняется
 
-int sc_commandDecode (int value,int *command,
+int sc_commandDecode (int value, int *command,
                       int *operand); // декодирует значение как команду sc если
                                      // декодировние невозможно  устанавливает
                                      // команду ошибки и возвращает ошибку.

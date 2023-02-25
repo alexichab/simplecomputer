@@ -58,11 +58,12 @@ main ()
   int operand = 11;   //что записываешь в команду
   sc_commandEncode (command, operand, &val);
   printf ("Кодирование команды '%d' операнда '%d' = '%d' \n", command, operand,
-          val);   
+           val);   
   sc_commandDecode (val, &command, &operand);
   printf ("Декодирование '%d' = команды '%d' операнда'%d'\n", val, command,
           operand);
-  sc_commandEncode (0x0, 129, &val);     // пытаемся закодировать неправильную команду
+  sc_commandEncode (0x0, 129,
+                    &val); // пытаемся закодировать неправильную команду
   printf ("Кодирование value = %d\n", val); // ничего не меняется
   sc_regGet (FLAG_WRONG_COMMAND, &val);
   printf ("FLAG_WRONG_COMMAND = %d\n", val);
