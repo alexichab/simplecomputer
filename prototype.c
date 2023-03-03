@@ -24,8 +24,9 @@ sc_memorySet (int address,
 }
 
 int
-sc_memoryGet (int address, // gets the value of [address] memory unit and
-              int *value) //получает значение блока памяти и возвращет его в переменную
+sc_memoryGet (
+    int address, // gets the value of [address] memory unit and
+    int *value) //получает значение блока памяти и возвращет его в переменную
 {
   if (address < 0 || address >= MEMSIZE)
     {
@@ -66,7 +67,7 @@ int
 sc_regInit (void) //инициализирует регистр флагов с 0
 {
   sc_register = 0;
-  return 0; 
+  return 0;
 }
 
 int
@@ -142,7 +143,7 @@ int
 sc_commandDecode (int value, int *command,
                   int *operand) // декодирует значение как комнаду sc, если
                                 // декодировавние невозможно устанавливает
-                                // команду error и возвразает ошибку.  
+                                // команду error и возвразает ошибку.
 {
   if ((value & (1 << 14)) != 0)
     {
