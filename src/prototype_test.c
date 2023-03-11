@@ -1,8 +1,7 @@
 #include "prototype.h"
-#include <stdio.h>
 
 int
-main ()
+prototype_test ()
 {
   printf ("___________________________________________________________________"
           "____\n");
