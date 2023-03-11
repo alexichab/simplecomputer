@@ -8,6 +8,8 @@
 #include <unistd.h>
 
 #define CLEAR "\E[H\E[2J"
+#define RESETCOLOR "\033[0m"
+#define RESETCOLORF "\033[39m"
 
 enum colors
 {
