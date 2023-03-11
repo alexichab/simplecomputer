@@ -17,8 +17,11 @@ main ()
   sc_regInit ();
   sc_regSet (1, 1);
   sc_regSet (2, 1);
+  sc_regSet (3, 1);
   sc_regSet (4, 1);
-  sc_regSet (16, 1);
+  sc_regSet (5, 1);
   out_GUI ();
+  term_test();
+  printf("\E[H\E[2J\033[0m\033[39m");
   return 0;
 }

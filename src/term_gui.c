@@ -32,11 +32,11 @@ out_flags ()
   char F = flag == 1 ? 'F' : ' ';
   sc_regGet (2, &flag);
   char D = flag == 1 ? 'D' : ' ';
-  sc_regGet (4, &flag);
+  sc_regGet (3, &flag);
   char A = flag == 1 ? 'A' : ' ';
-  sc_regGet (8, &flag);
+  sc_regGet (4, &flag);
   char O = flag == 1 ? 'O' : ' ';
-  sc_regGet (16, &flag);
+  sc_regGet (5, &flag);
   char C = flag == 1 ? 'C' : ' ';
   printf ("%c  %c  %c  %c  %c", F, D, A, O, C);
 }
