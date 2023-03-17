@@ -2,6 +2,8 @@
 
 int sc_memory[MEMSIZE];
 int sc_register;
+int sc_accum;
+int sc_count;
 
 int
 sc_memoryInit () //инициализирует массив из 100 элементов
@@ -153,5 +155,33 @@ sc_commandDecode (int value, int *command,
   *command = (value >> 7);
   value -= (*command << 7);
   *operand = value;
+  return 0;
+}
+
+int
+sc_accumSet (int value)
+{
+  sc_accum = value;
+  return 0;
+}
+
+int
+sc_accumGet (int *value)
+{
+  *value = sc_accum;
+  return 0;
+}
+
+int
+sc_countSet (int value)
+{
+  sc_count = value;
+  return 0;
+}
+
+int
+sc_countGet (int *value)
+{
+  *value = sc_count;
   return 0;
 }

@@ -6,7 +6,7 @@ bin/simplecomputer: src/main.c bin/lib.a
 	$(DIRGUARD)
 	gcc -Wall -Wextra -I src -o $@ $^ -lm
 
-bin/lib.a: obj/bc.o obj/msc.o obj/term.o obj/term_gui.o
+bin/lib.a: obj/bc.o obj/prototype.o obj/term.o obj/term_gui.o
 	$(DIRGUARD)
 	ar rcs $@ $^
 

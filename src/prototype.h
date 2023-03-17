@@ -59,3 +59,11 @@ int sc_commandDecode (int value, int *command,
                       int *operand); // декодирует значение как команду sc если
                                      // декодировние невозможно  устанавливает
                                      // команду ошибки и возвращает ошибку.
+
+int sc_accumGet (int *value);
+
+int sc_accumSet (int value);
+
+int sc_countSet (int value);
+
+int sc_countGet (int *value);
