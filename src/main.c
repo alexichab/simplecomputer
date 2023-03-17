@@ -1,4 +1,5 @@
 #include "prototype.h"
+#include "bc.h"
 #include "term.h"
 #include "term_gui.h"
 #include <stdio.h>
@@ -15,13 +16,14 @@ main ()
       sc_memorySet (i, i);
     }
   sc_regInit ();
-  sc_regSet (1, 1);
-  sc_regSet (2, 1);
-  sc_regSet (3, 1);
-  sc_regSet (4, 1);
-  sc_regSet (5, 1);
-  out_GUI ();
-  term_test();
-  printf("\E[H\E[2J\033[0m\033[39m");
+  for (int j=1; j<5; j++)//попробую через цикл
+    {
+      sc_regSet (j, 1);  
+    }
+  // sc_regSet (1, 1);
+  // sc_regSet (2, 1);
+  // sc_regSet (3, 1);
+  // sc_regSet (4, 1);
+  // sc_regSet (5, 1);
   return 0;
 }
