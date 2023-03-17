@@ -1,2 +1,4 @@
 main
 *.mem
+bin/
+obj/
