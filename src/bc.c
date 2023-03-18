@@ -150,4 +150,3 @@ bc_bigcharread (int fd, int *big, int need_count, int *count)
     }
   return 0;
 }
-

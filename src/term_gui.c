@@ -1,6 +1,6 @@
 #include "term_gui.h"
-#include "prototype.h"
 #include "bc.h"
+#include "prototype.h"
 #include "term.h"
 #include <math.h>
 #include <stdlib.h>
