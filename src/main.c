@@ -31,28 +31,28 @@ main ()
   };
   mt_clrscr ();
   sc_memoryInit ();
-  for (int i = 3; i < 100; i *= 3)
+  for (int i = 3; i < 100; i += 2)
     {
-      sc_memorySet (i, i);
+      sc_memorySet (i, i*2);
     }
   sc_regInit ();
-  for (int j=1; j<5; j++)//попробую через цикл
-    {
-      sc_regSet (j, 1);  
-    }
+  // for (int j=1; j<5; j++)//попробую через цикл
+  //   {
+  //     sc_regSet (j, 1);  
+  //   }
+  sc_regSet (1, 1); 
+  sc_regSet (2, 1); 
+  sc_regSet (4, 1); 
+  sc_regSet (8, 1); 
+  sc_regSet (16, 1); 
   sc_accumSet (312);
-  sc_countSet (96);
+  sc_countSet (3);
   g_static ();
   g_memorybox ();
   g_accumbox ();
   g_counterbox ();
   g_operationbox ();
   g_flagbox ();
-  g_bcbox (big);  
-  // sc_regSet (1, 1);
-  // sc_regSet (2, 1);
-  // sc_regSet (3, 1);
-  // sc_regSet (4, 1);
-  // sc_regSet (5, 1);
+  g_bcbox (*big);  
   return 0;
 }
