@@ -1,4 +1,5 @@
 #include "bc.h"
+#include "readkey.h"
 #include "prototype.h"
 #include "term.h"
 #include "term_gui.h"
@@ -30,6 +31,7 @@ main ()
     { 0x00181800, 0x00181800 }  // :
   };
   mt_clrscr ();
+  rk_mytermregime (0, 0, 1, 0, 1);
   sc_memoryInit ();
   for (int i = 3; i < 100; i += 2)
     {
@@ -47,12 +49,7 @@ main ()
   sc_regSet (16, 1);
   sc_accumSet (312);
   sc_countSet (3);
-  g_static ();
-  g_memorybox ();
-  g_accumbox ();
-  g_counterbox ();
-  g_operationbox ();
-  g_flagbox ();
-  g_bcbox (*big);
+  g_interface (big);
+  rk_mytermrestore ();
   return 0;
 }
