@@ -1,5 +1,6 @@
 #include "term_gui.h"
 #include "bc.h"
+#include "readkey.h"
 #include "prototype.h"
 #include "term.h"
 #include <math.h>
@@ -27,7 +28,7 @@ g_flags (char **val)
 }
 
 int
-g_static ()
+g_static (void)
 {
   bc_box (1, 1, 12, 63);
   mt_gotoXY (0, 28);
@@ -65,12 +66,12 @@ g_static ()
 }
 
 int
-g_memorybox ()
+g_memorybox (void)
 {
   int k = 0;
-  for (int i = 2; i < 12; i++)
+  for (int i = X_START; i < 12; i++)
     {
-      for (int j = 3; j < 63; j += 6)
+      for (int j = Y_START; j < 63; j += Y_STEP)
         {
           mt_gotoXY (i, j);
           char buff[6];
@@ -84,7 +85,7 @@ g_memorybox ()
 }
 
 int
-g_accumbox ()
+g_accumbox (void)
 {
   mt_gotoXY (2, 80);
   char buff[5];
@@ -97,7 +98,7 @@ g_accumbox ()
 }
 
 int
-g_counterbox ()
+g_counterbox (void)
 {
   mt_gotoXY (5, 80);
   char buff[5];
@@ -110,7 +111,7 @@ g_counterbox ()
 }
 
 int
-g_operationbox ()
+g_operationbox (void)
 {
   mt_gotoXY (8, 79);
   write (STDOUT_FILENO, "+00 : 00", 8 * sizeof (char));
@@ -119,7 +120,7 @@ g_operationbox ()
 }
 
 int
-g_flagbox ()
+g_flagbox (void)
 {
   mt_gotoXY (11, 79);
   char *val;
@@ -200,5 +201,202 @@ g_bcbox (int *big)
       bc_printbigchar (digit, BC_X, BC_START + (4 - i) * BC_STEP, GREEN, GREY);
     }
   mt_gotoXY (33, 0);
+  return 0;
+}
+
+int
+g_loadmemory (void)
+{
+  bc_box (6, 20, 3, 26);
+  mt_gotoXY (6, 24);
+  write (STDOUT_FILENO, " Load from \n", strlen (" Load from \n"));
+  char buff[20][1];
+  mt_gotoXY (7, 21);
+  for (int i = 0; i < 20; i++)
+    {
+      mt_gotoXY (7, 21 + i);
+      read (STDOUT_FILENO, buff[i], 1);
+      if (buff[i][0] == '\n')
+        {
+          break;
+        }
+      mt_gotoXY (7, 21);
+      write (STDERR_FILENO, buff, strlen (buff));
+    }
+  buff[strlen (buff) - 1][0] = '\0';
+  if (sc_memoryLoad (buff) != 0)
+    {
+      bc_box (6, 20, 3, 26);
+      mt_gotoXY (6, 24);
+      mt_setbgcolor (RED);
+      write (STDOUT_FILENO, " Fail! \n", strlen (" Fail! \n"));
+    }
+  else
+    {
+      bc_box (6, 20, 3, 26);
+      mt_gotoXY (6, 24);
+      mt_setbgcolor (GREEN);
+      write (STDOUT_FILENO, " Success! \n", strlen (" Success! \n"));
+    }
+  mt_setbgcolor (GREY);
+  read (STDOUT_FILENO, NULL, 1);
+  g_static ();
+  return 0;
+}
+
+int
+g_savememory (void)
+{
+  bc_box (6, 20, 3, 26);
+  mt_gotoXY (6, 24);
+  write (STDOUT_FILENO, " Save to \n", strlen (" Save to \n"));
+  char buff[20][1];
+  mt_gotoXY (7, 21);
+  for (int i = 0; i < 20; i++)
+    {
+      mt_gotoXY (7, 21 + i);
+      read (STDOUT_FILENO, buff[i], 1);
+      if (buff[i][0] == '\n')
+        {
+          break;
+        }
+      mt_gotoXY (7, 21);
+      write (STDERR_FILENO, buff, strlen (buff));
+    }
+  buff[strlen (buff) - 1][0] = '\0';
+  sc_memorySave (buff);
+  bc_box (6, 20, 3, 26);
+  mt_gotoXY (6, 24);
+  mt_setbgcolor (GREEN);
+  write (STDOUT_FILENO, " Success! \n", strlen (" Success! \n"));
+  mt_setbgcolor (GREY);
+  read (STDOUT_FILENO, NULL, 1);
+  g_static ();
+  return 0;
+}
+
+int
+g_init (int *big)
+{
+  g_memorybox ();
+  g_accumbox ();
+  g_counterbox ();
+  g_operationbox ();
+  g_flagbox ();
+  g_bcbox (big);
+  return 0;
+}
+
+int
+g_setmemory (int x, int y)
+{
+  bc_box (6, 20, 3, 26);
+  mt_gotoXY (6, 24);
+  write (STDOUT_FILENO, " Set memory value to \n",
+         strlen (" Set memory value to \n"));
+  char buff[5][1];
+  mt_gotoXY (7, 21);
+  for (int i = 0; i < 4; i++)
+    {
+      mt_gotoXY (7, 21 + i);
+      read (STDOUT_FILENO, buff[i], 1);
+      if (buff[i][0] == '\n')
+        {
+          break;
+        }
+      mt_gotoXY (7, 21);
+      write (STDERR_FILENO, buff, strlen (buff));
+    }
+  buff[4][0] = '\0';
+  int val = atoi (buff);
+  sc_memorySet (x * 10 + y, val);
+  g_static ();
+  g_memorybox ();
+  return 0;
+}
+
+int
+g_printmem (int *x, int *y)
+{
+  g_memorybox ();
+  *x %= 10;
+  *y %= 10;
+  if (*x == -1)
+    {
+      *x = 9;
+    }
+  if (*y == -1)
+    {
+      *y = 9;
+    }
+  mt_gotoXY (X_START + (*x), Y_START + (*y) * Y_STEP);
+  char buff[6];
+  int address = (*x) * 10 + (*y);
+  sc_countSet (address);
+  int val;
+  sc_memoryGet (address, &val);
+  sprintf (buff, "+%04d", val);
+  mt_setbgcolor (BLUE);
+  write (STDERR_FILENO, buff, 6 * sizeof (char));
+  mt_setbgcolor (GREY);
+  return 0;
+}
+
+int
+g_interface (int *big)
+{
+  int exit = 0, x = 0, y = 0, cnt = 0;
+  mt_setbgcolor (GREY);
+  g_static ();
+  while (!exit)
+    {
+      enum keys key = KEY_DEFAULT;
+      g_init (big);
+      g_memorybox ();
+      g_printmem (&x, &y);
+      g_counterbox ();
+      g_bcbox (big);
+      rk_readkey (&key);
+      switch (key)
+        {
+        case KEY_ESCAPE:
+          exit++;
+          break;
+        case KEY_UP:
+          x--;
+          break;
+        case KEY_DOWN:
+          x++;
+          break;
+        case KEY_LEFT:
+          y--;
+          break;
+        case KEY_RIGHT:
+          y++;
+          break;
+        case KEY_L:
+          g_loadmemory ();
+          break;
+        case KEY_S:
+          g_savememory ();
+          break;
+        case KEY_I:
+          sc_memoryInit ();
+          x = 0, y = 0;
+          g_static ();
+          break;
+        case KEY_ENTER:
+          g_setmemory (x, y);
+          break;
+        default:
+          break;
+        }
+      if (cnt == 5)
+        {
+          g_static ();
+          cnt = 0;
+        }
+      cnt++;
+    }
   return 0;
 }
