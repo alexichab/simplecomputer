@@ -9,7 +9,8 @@
 
 int
 main ()
-{
+{ //big переннести
+
   int big[18][2] = {
     { 0x4242423C, 0x3C424242 }, // 0
     { 0x48506040, 0x40404040 }, // 1
@@ -31,7 +32,7 @@ main ()
     { 0x00181800, 0x00181800 }  // :
   };
   mt_clrscr ();
-  rk_mytermregime (0, 0, 1, 0, 1);
+  rk_mytermregime (0, 0, 1, 0, 1);//за выбор между режимом отвечает 1 передаваемая переменная 0-неканон 1-канон
   sc_memoryInit ();
   for (int i = 3; i < 100; i += 2)
     {
@@ -49,7 +50,7 @@ main ()
   sc_regSet (16, 1);
   sc_accumSet (312);
   sc_countSet (3);
-  g_interface (big);
+  g_interface (*big);
   rk_mytermrestore ();
   return 0;
 }
