@@ -2,3 +2,4 @@ main
 *.mem
 bin/
 obj/
+lib/
