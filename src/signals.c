@@ -1,6 +1,6 @@
 #include "signals.h"
-#include "term_gui.h"
 #include "prototype.h"
+#include "term_gui.h"
 
 int
 sig_handle_reset () //сброс
@@ -13,7 +13,7 @@ sig_handle_reset () //сброс
 }
 
 int
-sig_handle_alarm ()//запуск таймера
+sig_handle_alarm () //запуск таймера
 {
   g_drawboxes ();
   int value;

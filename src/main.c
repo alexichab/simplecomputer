@@ -1,16 +1,16 @@
 #include "bc.h"
-#include "readkey.h"
 #include "prototype.h"
+#include "readkey.h"
+#include "signals.h"
 #include "term.h"
 #include "term_gui.h"
-#include "signals.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 int
 main ()
-{ 
+{
   sc_memoryInit ();
   for (int i = 3; i < 100; i += 2)
     {

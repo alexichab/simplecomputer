@@ -1,6 +1,6 @@
 #include "term_gui.h"
+#include <signal.h>
 #include <unistd.h>
-#include<signal.h>
 
 int
 g_writeflags (char **val)
@@ -421,9 +421,9 @@ g_interface ()
         case KEY_R:
           sc_regGet (FLAG_IGNORE, &flag);
           sc_regSet (FLAG_IGNORE, !flag);
-          if (flag == 0) 
+          if (flag == 0)
             alarm (1);
-          else 
+          else
             alarm (0);
           break;
         default:
