@@ -2,11 +2,11 @@ DIRGUARD = @mkdir -p $(@D)
 
 all: bin/simplecomputer
 .PHONY: bin/simplecomputer
-bin/simplecomputer: src/main.c lib/bc.a lib/prototype.a lib/readkey.a lib/term_gui.a lib/term.a
+bin/simplecomputer: src/main.c lib/bc.a lib/prototype.a lib/readkey.a lib/term_gui.a lib/term.a lib/signals.a
 	$(DIRGUARD)
 	gcc -Wall -Wextra -I src -o $@ $^ -lm
 
-lib/term_gui.a: obj/term_gui.o obj/bc.o
+lib/term_gui.a: obj/term_gui.o obj/bc.o obj/signals.o
 	$(DIRGUARD)
 	ar rcs $@ $^
 
@@ -20,7 +20,7 @@ obj/%.o: src/%.c
 
 test: bin/test
 .PHONY: bin/test
-bin/test: test/*.c lib/bc.a lib/prototype.a lib/readkey.a lib/term_gui.a lib/term.a
+bin/test: test/*.c lib/bc.a lib/prototype.a lib/readkey.a lib/term_gui.a lib/term.a lib/signals.a
 	$(DIRGUARD)
 	gcc -Wall -Wextra -I src -MMD -I thirdparty -o $@ $^ -lm
 
