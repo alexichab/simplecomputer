@@ -3,3 +3,7 @@ main
 bin/
 obj/
 lib/
+~*
+*.o
+*.sa
+*.sb
