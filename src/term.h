@@ -8,8 +8,6 @@
 #include <unistd.h>
 
 #define CLEAR "\E[H\E[2J"
-#define RESETCOLOR "\033[0m"
-#define RESETCOLORF "\033[39m"
 
 enum colors
 {
@@ -22,13 +20,15 @@ enum colors
   YELLOW = 184,
 };
 
-int mt_clrscr (void); // очищает экран и перемещает курсор в верхний левый угол
+int mt_clrscr (void); // clears screen and moves cursor to upper left corner
 int mt_gotoXY (
     int x,
-    int y); // перемещает курсор к введенным координатам (x, y) = (row, col)
-int mt_getscreensize (int *rows, int *cols); //получает размер экрана терминала
-                                             //(количество строк и столбцов)
-int mt_setfgcolor (enum colors color); // устанавливает цвет фона для всех и
-                                       // столбцов всего терминала
-int mt_setbgcolor (enum colors color); // устанавливает цвет фона только для
-                                       // предстоящих символов
+    int y); // moves cursor to the entered coordinates (x, y) = (row, col)
+int mt_getscreensize (
+    int *rows, int *cols); // gets terminal screen size (num of rows and cols)
+int mt_setfgcolor (enum colors color); // sets a background color for all rows
+                                       // and cols, entire terminal
+int mt_setbgcolor (
+    enum colors color); // sets a background color only for upcoming characters
+int mt_readtext (char *text, int size);
+int mt_printtext (char *text);

@@ -1,9 +1,9 @@
 #include "term.h"
 
 int
-mt_clrscr (void) // очищает экран и перемещает курсор в верхний левый угол
+mt_clrscr (void)
 {
-  if (write (STDOUT_FILENO, CLEAR, strlen (CLEAR))
+  if ((unsigned long)write (STDOUT_FILENO, CLEAR, strlen (CLEAR))
       < sizeof (char) * strlen (CLEAR))
     {
       return -1;
@@ -12,13 +12,12 @@ mt_clrscr (void) // очищает экран и перемещает курсо
 }
 
 int
-mt_gotoXY (
-    int x,
-    int y) // перемещает курсор к введенным координатам (x, y) = (row, col)
+mt_gotoXY (int x, int y)
 {
   char go[30];
   sprintf (go, "\E[%d;%dH", x, y);
-  if (write (STDOUT_FILENO, go, strlen (go)) < sizeof (char) * strlen (go))
+  if ((unsigned long)write (STDOUT_FILENO, go, strlen (go))
+      < sizeof (char) * strlen (go))
     {
       return -1;
     }
@@ -26,8 +25,7 @@ mt_gotoXY (
 }
 
 int
-mt_getscreensize (int *rows, int *cols) // получает размер экрана терминала
-                                        // (количество строк и столбцов)
+mt_getscreensize (int *rows, int *cols)
 {
   struct winsize ws;
   if (ioctl (1, TIOCGWINSZ, &ws))
@@ -40,12 +38,11 @@ mt_getscreensize (int *rows, int *cols) // получает размер экр�
 }
 
 int
-mt_setfgcolor (enum colors color) // устанавливает цвет фона для всех строк и
-                                  // столбцов всего терминала
+mt_setfgcolor (enum colors color)
 {
   char foreground[30];
   sprintf (foreground, "\E[38;5;%dm", color);
-  if (write (STDOUT_FILENO, foreground, strlen (foreground))
+  if ((unsigned long)write (STDOUT_FILENO, foreground, strlen (foreground))
       < sizeof (char) * strlen (foreground))
     {
       return -1;
@@ -54,15 +51,29 @@ mt_setfgcolor (enum colors color) // устанавливает цвет фон�
 }
 
 int
-mt_setbgcolor (enum colors color) //устанавливает цвет фона только для
-                                  //предстоящих символов
+mt_setbgcolor (enum colors color)
 {
   char background[30];
   sprintf (background, "\E[48;5;%dm", color);
-  if (write (STDOUT_FILENO, background, strlen (background))
+  if ((unsigned long)write (STDOUT_FILENO, background, strlen (background))
       < sizeof (char) * strlen (background))
     {
       return -1;
     }
+  return 0;
+}
+
+int
+mt_readtext (char *text, int size)
+{
+  int numRead = read (STDOUT_FILENO, text, size);
+  text[numRead] = '\0';
+  return 0;
+}
+
+int
+mt_printtext (char *text)
+{
+  write (STDOUT_FILENO, text, strlen (text));
   return 0;
 }
